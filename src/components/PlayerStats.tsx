@@ -47,7 +47,7 @@ const PlayerStats = () => {
 
     return (
         <div>
-            <h1>Player Stats</h1>
+            <h3>Player Stats</h3>
             <ul>
                 {creatures.length > 0 ? (
                     creatures.map((creature) => (
