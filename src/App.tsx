@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from './redux/store';
 import { fetchGameState } from './redux/gameStateSlice';
 import logo from './logo.svg';
-import './App.css';
+import './styles/App.scss';
 import DMInterface from './components/DMInterface';
 import PlayerInterface from './components/PlayerInterface';
 
