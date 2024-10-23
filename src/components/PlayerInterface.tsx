@@ -28,6 +28,7 @@ const PlayerInterface = () => {
         <div>
             <h1>Player Interface</h1>
             {/* Show DM login button only in Player interface */}
+            <PlayerStats />
             <div>
                 <label>Username:</label>
                 <input

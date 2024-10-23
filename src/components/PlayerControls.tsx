@@ -13,8 +13,9 @@ interface Creature {
     turnResources: TurnResource[];
 }
 
-const PlayerStats = () => {
+const PlayerControls = () => {
     const [creatures, setCreatures] = useState<Creature[]>([]); // Initialize as an empty array
+    const [loading, setLoading] = useState(false); // Track loading state for updating HP
 
     // Long polling to fetch game state
     useEffect(() => {
@@ -32,6 +33,18 @@ const PlayerStats = () => {
         fetchData();
     }, []);
 
+    // Function to handle HP update
+    const handleHPUpdate = async (creatureId: string, newHP: number) => {
+        try {
+            setLoading(true); // Set loading state
+            await updateCreatureHP(creatureId, newHP);
+        } catch (error) {
+            console.error('Error updating HP:', error);
+        } finally {
+            setLoading(false); // Clear loading state after update
+        }
+    };
+
     return (
         <div>
             <h3>Player Stats</h3>
@@ -40,6 +53,12 @@ const PlayerStats = () => {
                     creatures.map((creature) => (
                         <li key={creature.creatureId}>
                             {creature.name} ({creature.subrace}): {getCreatureHP(creature.turnResources)} HP
+                            <button
+                                onClick={() => handleHPUpdate(creature.creatureId, getCreatureHP(creature.turnResources) + 10)}
+                                disabled={loading}
+                            >
+                                Increase HP by 10
+                            </button>
                         </li>
                     ))
                 ) : (
@@ -56,4 +75,4 @@ const getCreatureHP = (turnResources: TurnResource[]):number => {
     return hpResource ? hpResource.amount : 0;
 };
 
-export default PlayerStats;
+export default PlayerControls;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PlayerStats from './PlayerStats';
+import PlayerControls from './PlayerControls';
 
 // DM Interface Component
 const DMInterface = () => {
@@ -7,7 +7,7 @@ const DMInterface = () => {
         <div>
             <h1>Dungeon Master UI</h1>
             {/* DM-specific content */}
-            <PlayerStats />
+            <PlayerControls />
         </div>
     );
 };
