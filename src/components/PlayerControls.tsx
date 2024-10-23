@@ -1,47 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { getGameState, updateCreatureHP } from '../api'; // Import updateCreatureHP API
-
-interface TurnResource{
-    type: string;
-    amount:number;
-}
-
-interface Creature {
-    creatureId: string;
-    name: string;
-    subrace: string;
-    turnResources: TurnResource[];
-}
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { updateCreatureHP } from '../api';
 
 const PlayerControls = () => {
-    const [creatures, setCreatures] = useState<Creature[]>([]); // Initialize as an empty array
-    const [loading, setLoading] = useState(false); // Track loading state for updating HP
-
-    // Long polling to fetch game state
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getGameState();
-                setCreatures(data.creatures || []); // Set creatures
-            } catch (error) {
-                console.error('Error fetching gamestate data:', error);
-            } finally {
-                setTimeout(fetchData, 2000); // Polling every 2 seconds
-            }
-        };
-
-        fetchData();
-    }, []);
+    const creatures = useSelector((state: RootState) => state.gameState.creatures);
+    const [loading, setLoading] = useState(false);
 
     // Function to handle HP update
     const handleHPUpdate = async (creatureId: string, newHP: number) => {
         try {
-            setLoading(true); // Set loading state
+            setLoading(true);
+            console.log("loading: true");
             await updateCreatureHP(creatureId, newHP);
         } catch (error) {
             console.error('Error updating HP:', error);
         } finally {
-            setLoading(false); // Clear loading state after update
+            setLoading(false);
+            console.log("loading: false");
         }
     };
 
@@ -70,7 +46,7 @@ const PlayerControls = () => {
 };
 
 // Helper function to extract HP from turnResources
-const getCreatureHP = (turnResources: TurnResource[]):number => {
+const getCreatureHP = (turnResources: { type: string; amount: number }[]): number => {
     const hpResource = turnResources.find((resource) => resource.type === 'HP');
     return hpResource ? hpResource.amount : 0;
 };
