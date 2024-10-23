@@ -6,21 +6,46 @@ import logo from './logo.svg';
 import './styles/App.scss';
 import DMInterface from './components/DMInterface';
 import PlayerInterface from './components/PlayerInterface';
+import { generateUUID } from './api';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
-  const isDM = useSelector((state: RootState) => state.dm.isDM); // Get isDM from Redux
+  const isDM = useSelector((state: RootState) => state.dm.isDM);
+
+  useEffect(() => {
+    const fetchUUID = async () => {
+      let deviceId = localStorage.getItem('deviceId');
+
+      if (!deviceId || deviceId === "deviceId-generation-error") {
+        try {
+          const data = await generateUUID(); 
+          deviceId = data.uuid;
+          if(!deviceId){
+            deviceId = "deviceId-generation-error"
+          }
+          localStorage.setItem('deviceId', deviceId); // Store the UUID in localStorage
+        } catch (error) {
+          console.error('Error fetching UUID:', error);
+        }
+      }
+
+      console.log('Device ID:', deviceId);
+    };
+
+    // TODO here i need to set a creatureId based on the deviceId and gamestate existing data, and save the creatureId to redux
+
+    fetchUUID();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        dispatch(fetchGameState()); // Fetch game state
+        dispatch(fetchGameState());
       } catch {
         console.error('Error fetching game state data');
       }
     };
 
-    // Use setInterval to poll the API every 2 seconds
     const intervalId = setInterval(fetchData, 2000);
 
     // Cleanup interval on component unmount

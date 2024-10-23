@@ -13,8 +13,14 @@ interface Creature {
     turnResources: TurnResource[];
 }
 
+interface DeviceMapping {
+    deviceId: string;
+    creatureId: string;
+}
+
 interface GameState {
     creatures: Creature[];
+    deviceMappings: DeviceMapping[];
     loading: boolean;
     error: string | null;
 }
@@ -22,6 +28,7 @@ interface GameState {
 // Initial state
 const initialState: GameState = {
     creatures: [],
+    deviceMappings: [],
     loading: false,
     error: null,
 };

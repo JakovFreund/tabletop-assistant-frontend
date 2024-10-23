@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { updateCreatureHP } from '../api';
+import { setCreatureHP } from '../api';
 
 const PlayerControls = () => {
     const creatures = useSelector((state: RootState) => state.gameState.creatures);
@@ -11,13 +11,11 @@ const PlayerControls = () => {
     const handleHPUpdate = async (creatureId: string, newHP: number) => {
         try {
             setLoading(true);
-            console.log("loading: true");
-            await updateCreatureHP(creatureId, newHP);
+            await setCreatureHP(creatureId, newHP);
         } catch (error) {
             console.error('Error updating HP:', error);
         } finally {
             setLoading(false);
-            console.log("loading: false");
         }
     };
 
