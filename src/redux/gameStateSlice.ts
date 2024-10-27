@@ -16,11 +16,18 @@ interface Creature {
 interface DeviceMapping {
     deviceId: string;
     creatureId: string;
+    isDM: boolean;
+}
+
+interface Device {
+    deviceId: string;
+    deviceNickname: string;
 }
 
 interface GameState {
     creatures: Creature[];
     deviceMappings: DeviceMapping[];
+    devices: Device[];
     loading: boolean;
     error: string | null;
 }
@@ -29,6 +36,7 @@ interface GameState {
 const initialState: GameState = {
     creatures: [],
     deviceMappings: [],
+    devices: [],
     loading: false,
     error: null,
 };
@@ -49,8 +57,10 @@ const gameStateSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchGameState.fulfilled, (state, action: PayloadAction<{ creatures: Creature[] }>) => {
+            .addCase(fetchGameState.fulfilled, (state, action: PayloadAction<{ creatures: Creature[], deviceMappings: DeviceMapping[], devices: Device[] }>) => {
                 state.creatures = action.payload.creatures;
+                state.deviceMappings = action.payload.deviceMappings;
+                state.devices = action.payload.devices;
                 state.loading = false;
             })
             .addCase(fetchGameState.rejected, (state, action) => {

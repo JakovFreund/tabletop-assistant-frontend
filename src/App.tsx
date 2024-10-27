@@ -6,33 +6,56 @@ import logo from './logo.svg';
 import './styles/App.scss';
 import DMInterface from './components/DMInterface';
 import PlayerInterface from './components/PlayerInterface';
-import { generateUUID } from './api';
+import { connectDevice, generateUUID } from './api';
+import { fetchConnectedDevices } from './redux/connectedDevicesSlice';
+import ConnectedDevices from './components/ConnectedDevices';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   const isDM = useSelector((state: RootState) => state.dm.isDM);
+  const localStorageDeviceId = 'tabletopAssistantDeviceId'
+
+
+  const handleDeviceConnect = async (deviceId: string) => {
+    try {
+      await connectDevice(deviceId);
+    } catch (error) {
+        console.error('Error connecting device:', error);
+    } finally {
+    }
+};
 
   useEffect(() => {
     const fetchUUID = async () => {
-      let deviceId = localStorage.getItem('deviceId');
-
-      if (!deviceId || deviceId === "deviceId-generation-error") {
+      let deviceId = localStorage.getItem(localStorageDeviceId);
+      if (!deviceId) {
         try {
           const data = await generateUUID(); 
-          deviceId = data.uuid;
+          deviceId = data;
           if(!deviceId){
-            deviceId = "deviceId-generation-error"
+            console.log(deviceId);
+            throw new Error('DeviceId generation error: deviceId is null. Check generateUUID()');
           }
-          localStorage.setItem('deviceId', deviceId); // Store the UUID in localStorage
+          localStorage.setItem(localStorageDeviceId, deviceId);
+
         } catch (error) {
           console.error('Error fetching UUID:', error);
         }
       }
 
+      if(!deviceId){
+        console.log(deviceId);
+        throw new Error('Error: deviceId is null.');
+      }
+
+      await handleDeviceConnect(deviceId);
       console.log('Device ID:', deviceId);
+      // TODO set a creatureId based on the deviceId and gamestate existing data, and save the creatureId to redux
+      // TODO if deviceId not found in gamestate render the deviceId on screen
+      // TODO move PlayerInterface.handleDMLogin() to this class and call it here // do i need the dm login??
+
     };
 
-    // TODO here i need to set a creatureId based on the deviceId and gamestate existing data, and save the creatureId to redux
 
     fetchUUID();
   }, []);
@@ -52,11 +75,27 @@ function App() {
     return () => clearInterval(intervalId);
   }, [dispatch]);
 
+    // Fetch connected devices at regular intervals
+    useEffect(() => {
+      const fetchConnectedDevicesData = async () => {
+        try {
+          dispatch(fetchConnectedDevices());
+        } catch {
+          console.error('Error fetching connected devices data');
+        }
+      };
+  
+      const connectedDevicesIntervalId = setInterval(fetchConnectedDevicesData, 2000);
+  
+      return () => clearInterval(connectedDevicesIntervalId);
+    }, [dispatch]);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <div>
+          <ConnectedDevices /> 
           {isDM ? (
             <DMInterface />
           ) : (
