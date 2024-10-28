@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
+import AllPlayerStats from './AllPlayerStats';
 import PlayerStats from './PlayerStats';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { setDM } from '../redux/dmSlice';
+import { setDungeonMaster } from '../redux/deviceSlice';
 
 const PlayerInterface = () => {
     const dispatch = useDispatch();
-    const isDM = useSelector((state: RootState) => state.dm.isDM);
+    const isDM = useSelector((state: RootState) => state.device.dungeonMaster);
     const [username, setUsername] = useState(''); // State for username input
     const [password, setPassword] = useState(''); // State for password input
 
@@ -17,7 +18,7 @@ const PlayerInterface = () => {
         const hardcodedUsername = 'a';
         const hardcodedPassword = 'a';
         if (username === hardcodedUsername && password === hardcodedPassword) {
-            dispatch(setDM(true)); // Dispatch action to set isDM to true
+            dispatch(setDungeonMaster(true)); // Dispatch action to set isDM to true
         } else {
             alert("Incorrect username or password.")
         }
@@ -29,6 +30,7 @@ const PlayerInterface = () => {
             <h1>Player Interface</h1>
             {/* Show DM login button only in Player interface */}
             <PlayerStats />
+            <AllPlayerStats />
             <div>
                 <label>Username:</label>
                 <input

@@ -1,12 +1,12 @@
 // src/redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import dmReducer from './dmSlice';
+import deviceReducer from './deviceSlice';
 import gameStateReducer from './gameStateSlice';
 import connectedDevicesReducer from './connectedDevicesSlice';
 
 export const store = configureStore({
   reducer: {
-    dm: dmReducer, // This is where you are adding the dm state
+    device: deviceReducer, // This is where you are adding the dm state
     gameState: gameStateReducer, // Add gameState reducer
     deviceConnectionStatus: connectedDevicesReducer
   },

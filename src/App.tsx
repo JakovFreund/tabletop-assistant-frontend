@@ -9,10 +9,13 @@ import PlayerInterface from './components/PlayerInterface';
 import { connectDevice, generateUUID } from './api';
 import { fetchConnectedDevices } from './redux/connectedDevicesSlice';
 import ConnectedDevices from './components/ConnectedDevices';
+import { setCreatureId, setDungeonMaster } from './redux/deviceSlice';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
-  const isDM = useSelector((state: RootState) => state.dm.isDM);
+  const isDM = useSelector((state: RootState) => state.device.dungeonMaster);
+  const deviceMappings =  useSelector((state: RootState) => state.gameState.deviceMappings);
+  //const devices =  useSelector((state: RootState) => state.gameState.devices);
   const localStorageDeviceId = 'tabletopAssistantDeviceId'
 
 
@@ -50,6 +53,24 @@ function App() {
 
       await handleDeviceConnect(deviceId);
       console.log('Device ID:', deviceId);
+
+      for (const deviceMapping of deviceMappings){
+        console.log("a "+deviceMapping.deviceId);
+        console.log("b "+deviceId);
+        if (deviceMapping.deviceId === deviceId){
+          dispatch(setCreatureId(deviceMapping.creatureId));
+          dispatch(setDungeonMaster(deviceMapping.dungeonMaster));
+        }
+      }
+    
+
+      
+      // 
+      // 
+      
+
+
+
       // TODO set a creatureId based on the deviceId and gamestate existing data, and save the creatureId to redux
       // TODO if deviceId not found in gamestate render the deviceId on screen
       // TODO move PlayerInterface.handleDMLogin() to this class and call it here // do i need the dm login??
@@ -58,7 +79,7 @@ function App() {
 
 
     fetchUUID();
-  }, []);
+  }, [deviceMappings, dispatch]);
 
   useEffect(() => {
     const fetchData = async () => {

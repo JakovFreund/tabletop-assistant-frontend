@@ -1,36 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { getGameState } from '../api';
-
-interface TurnResource {
-    type: string;
-    amount: number;
-}
-
-interface Creature {
-    creatureId: string;
-    name: string;
-    subrace: string;
-    turnResources: TurnResource[];
-}
-
-interface DeviceMapping {
-    deviceId: string;
-    creatureId: string;
-    isDM: boolean;
-}
-
-interface Device {
-    deviceId: string;
-    deviceNickname: string;
-}
-
-interface GameState {
-    creatures: Creature[];
-    deviceMappings: DeviceMapping[];
-    devices: Device[];
-    loading: boolean;
-    error: string | null;
-}
+import { Creature, Device, DeviceMapping, GameState } from '../types';
 
 // Initial state
 const initialState: GameState = {

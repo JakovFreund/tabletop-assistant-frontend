@@ -1,32 +1,41 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { useEffect, useState } from 'react';
+import { Creature } from '../types';
 
 const PlayerStats = () => {
     const creatures = useSelector((state: RootState) => state.gameState.creatures);
+    const creatureId = useSelector((state: RootState) => state.device.creatureId);
+    const [thisCreature, setThisCreature] = useState<Creature | null>(null);
+
+    
+    useEffect(() => {
+        for (const creature of creatures){
+            if (creature.creatureId===creatureId){
+                console.log(creature.name);
+                setThisCreature(creature);
+            }
+        }
+    }, [creatures, creatureId]);
+
+    
+
+    //const thisCreature;
 
     return (
         <div>
-            <h3>Player Stats</h3>
-            <ul>
-                {creatures.length > 0 ? (
-                    creatures.map((creature) => (
-                        <li key={creature.creatureId}>
-                            {creature.name} ({creature.subrace}): {getCreatureHP(creature.turnResources)} HP
-                        </li>
-                    ))
-                ) : (
-                    <li>No players found</li>
-                )}
-            </ul>
+            {thisCreature ? (
+                <div>
+                    <h1>{thisCreature.name}</h1>
+                    <p>Subrace: {thisCreature.subrace}</p>
+                    {/* Render additional stats if needed */}
+                </div>
+            ) : (
+                <p>Creature not found.</p>
+            )}
         </div>
     );
 };
 
-// Helper function to extract HP from turnResources
-const getCreatureHP = (turnResources: { type: string; amount: number }[]): number => {
-    const hpResource = turnResources.find((resource) => resource.type === 'HP');
-    return hpResource ? hpResource.amount : 0;
-};
 
 export default PlayerStats;
