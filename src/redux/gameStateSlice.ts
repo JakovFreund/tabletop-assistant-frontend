@@ -2,7 +2,6 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { getGameState } from '../api';
 import { Creature, Device, DeviceMapping, GameState } from '../types';
 
-// Initial state
 const initialState: GameState = {
     creatures: [],
     deviceMappings: [],
@@ -11,7 +10,6 @@ const initialState: GameState = {
     error: null,
 };
 
-// Thunk to fetch the game state
 export const fetchGameState = createAsyncThunk('gameState/fetch', async () => {
     const response = await getGameState();
     return response;
