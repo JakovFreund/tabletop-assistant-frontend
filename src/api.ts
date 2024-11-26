@@ -29,8 +29,8 @@ export const setCreatureHP = async (creatureId: string, newHP: number) => {
     return await apiRequest('PUT', `/creature/${creatureId}/hp`, { hp: newHP });
 };
 
-export const connectDevice = async (newDeviceId : string) => {
-    return await apiRequest('POST', '/connect', {deviceId: newDeviceId} )
+export const connectDevice = async (newDeviceId: string) => {
+    return await apiRequest('POST', '/connect', { deviceId: newDeviceId })
 }
 
 export const getConnectedDevices = async () => {

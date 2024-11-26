@@ -45,7 +45,7 @@ const PlayerInterface = () => {
             <div className="content">
                 <h1>Player UI</h1>
                 {renderComponent()}
-            </div> 
+            </div>
         </div>
     );
 };

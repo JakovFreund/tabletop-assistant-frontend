@@ -37,7 +37,7 @@ const DMInterface = () => {
             <div className="content">
                 <h1>Dungeon Master UI</h1>
                 {renderComponent()}
-            </div> 
+            </div>
         </div>
     );
 };

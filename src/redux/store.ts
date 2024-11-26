@@ -5,22 +5,22 @@ import gameStateReducer from './gameStateSlice';
 import connectedDevicesReducer from './connectedDevicesSlice';
 
 export const store = configureStore({
-  reducer: {
-    device: deviceReducer, // This is where you are adding the dm state
-    gameState: gameStateReducer, // Add gameState reducer
-    deviceConnectionStatus: connectedDevicesReducer
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        warnAfter: 64, // Increase the warning threshold in milliseconds
-      },
-      /*
-      getDefaultMiddleware({
-        serializableCheck: false, // Disables the SerializableStateInvariantMiddleware
-      }),
-      */
-    }),
+    reducer: {
+        device: deviceReducer, // This is where you are adding the dm state
+        gameState: gameStateReducer, // Add gameState reducer
+        deviceConnectionStatus: connectedDevicesReducer
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                warnAfter: 64, // Increase the warning threshold in milliseconds
+            },
+            /*
+            getDefaultMiddleware({
+              serializableCheck: false, // Disables the SerializableStateInvariantMiddleware
+            }),
+            */
+        }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -11,105 +11,105 @@ import { fetchConnectedDevices } from './redux/connectedDevicesSlice';
 import { setCreatureId, setDungeonMaster } from './redux/deviceSlice';
 
 function App() {
-  const dispatch = useDispatch<AppDispatch>();
-  const isDM = useSelector((state: RootState) => state.device.dungeonMaster);
-  const deviceMappings =  useSelector((state: RootState) => state.gameState.deviceMappings);
-  const localStorageDeviceId = 'tabletopAssistantDeviceId'
-  const [deviceMapped, setDeviceMapped] = useState(false);
-  const deviceIdRef = useRef<string | null>(null);
+    const dispatch = useDispatch<AppDispatch>();
+    const isDM = useSelector((state: RootState) => state.device.dungeonMaster);
+    const deviceMappings = useSelector((state: RootState) => state.gameState.deviceMappings);
+    const localStorageDeviceId = 'tabletopAssistantDeviceId'
+    const [deviceMapped, setDeviceMapped] = useState(false);
+    const deviceIdRef = useRef<string | null>(null);
 
 
 
-  const handleDeviceConnect = async (deviceId: string) => {
-    try {
-      await connectDevice(deviceId);
-    } catch (error) {
-        console.error('Error connecting device:', error);
-    } finally {
-    }
-  };
-
-  useEffect(() => {
-    const initializeDevice = async () => {
-      let storedDeviceId = localStorage.getItem(localStorageDeviceId);
-      if (!storedDeviceId) {
+    const handleDeviceConnect = async (deviceId: string) => {
         try {
-          const newDeviceId = await generateUUID();
-          storedDeviceId = newDeviceId;
-          if(!storedDeviceId){
-            console.log(storedDeviceId);
-            throw new Error('DeviceId generation error: deviceId is null. Check generateUUID()');
-          }
-          localStorage.setItem(localStorageDeviceId, storedDeviceId);
+            await connectDevice(deviceId);
         } catch (error) {
-          console.error('Error generating UUID:', error);
-          return;
+            console.error('Error connecting device:', error);
+        } finally {
         }
-      }
-      
-      deviceIdRef.current = storedDeviceId;
-      await handleDeviceConnect(storedDeviceId);
     };
 
-    initializeDevice();
-  }, []);
+    useEffect(() => {
+        const initializeDevice = async () => {
+            let storedDeviceId = localStorage.getItem(localStorageDeviceId);
+            if (!storedDeviceId) {
+                try {
+                    const newDeviceId = await generateUUID();
+                    storedDeviceId = newDeviceId;
+                    if (!storedDeviceId) {
+                        console.log(storedDeviceId);
+                        throw new Error('DeviceId generation error: deviceId is null. Check generateUUID()');
+                    }
+                    localStorage.setItem(localStorageDeviceId, storedDeviceId);
+                } catch (error) {
+                    console.error('Error generating UUID:', error);
+                    return;
+                }
+            }
 
-  useEffect(() => {
-    if (!deviceIdRef.current) return;
+            deviceIdRef.current = storedDeviceId;
+            await handleDeviceConnect(storedDeviceId);
+        };
 
-    for (const deviceMapping of deviceMappings) {
-      if (deviceMapping.deviceId === deviceIdRef.current) {
-        dispatch(setCreatureId(deviceMapping.creatureId));
-        dispatch(setDungeonMaster(deviceMapping.dungeonMaster));
-        setDeviceMapped(true);
-      }
-    }
-  }, [deviceMappings, dispatch]);
+        initializeDevice();
+    }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch(fetchGameState());
-      } catch {
-        console.error('Error fetching game state data');
-      }
-    };
+    useEffect(() => {
+        if (!deviceIdRef.current) return;
 
-    const intervalId = setInterval(fetchData, 2000);
+        for (const deviceMapping of deviceMappings) {
+            if (deviceMapping.deviceId === deviceIdRef.current) {
+                dispatch(setCreatureId(deviceMapping.creatureId));
+                dispatch(setDungeonMaster(deviceMapping.dungeonMaster));
+                setDeviceMapped(true);
+            }
+        }
+    }, [deviceMappings, dispatch]);
 
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, [dispatch]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                dispatch(fetchGameState());
+            } catch {
+                console.error('Error fetching game state data');
+            }
+        };
+
+        const intervalId = setInterval(fetchData, 2000);
+
+        return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }, [dispatch]);
 
 
-  useEffect(() => {
-    const fetchConnectedDevicesData = async () => {
-      try {
-        dispatch(fetchConnectedDevices());
-      } catch {
-        console.error('Error fetching connected devices data');
-      }
-    };
+    useEffect(() => {
+        const fetchConnectedDevicesData = async () => {
+            try {
+                dispatch(fetchConnectedDevices());
+            } catch {
+                console.error('Error fetching connected devices data');
+            }
+        };
 
-    const connectedDevicesIntervalId = setInterval(fetchConnectedDevicesData, 2000);
+        const connectedDevicesIntervalId = setInterval(fetchConnectedDevicesData, 2000);
 
-    return () => clearInterval(connectedDevicesIntervalId);
-  }, [dispatch]);
+        return () => clearInterval(connectedDevicesIntervalId);
+    }, [dispatch]);
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div>
-          {deviceMapped ? (<div></div>) : <div>Device not mapped! DeviceId: {deviceIdRef.current}</div>}
-          {isDM ? (
-            <DMInterface />
-          ) : (
-            <PlayerInterface />
-          )}
+    return (
+        <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <div>
+                    {deviceMapped ? (<div></div>) : <div>Device not mapped! DeviceId: {deviceIdRef.current}</div>}
+                    {isDM ? (
+                        <DMInterface />
+                    ) : (
+                        <PlayerInterface />
+                    )}
+                </div>
+            </header>
         </div>
-      </header>
-    </div>
-  );
+    );
 }
 
 export default App;

@@ -8,17 +8,17 @@ const PlayerStats = () => {
     const creatureId = useSelector((state: RootState) => state.device.creatureId);
     const [thisCreature, setThisCreature] = useState<Creature | null>(null);
 
-    
+
     useEffect(() => {
-        for (const creature of creatures){
-            if (creature.creatureId===creatureId){
+        for (const creature of creatures) {
+            if (creature.creatureId === creatureId) {
                 console.log(creature.name);
                 setThisCreature(creature);
             }
         }
     }, [creatures, creatureId]);
 
-    
+
 
     //const thisCreature;
 
