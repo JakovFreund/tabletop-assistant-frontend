@@ -15,7 +15,7 @@ const ConnectedDevices = () => {
                         <li key={deviceId}> {deviceId} </li>
                     ))
                 ) : (
-                    <li>No players found</li>
+                    <li>No devices found</li>
                 )}
             </ul>
         </div>

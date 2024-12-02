@@ -57,7 +57,7 @@ export interface Creature {
 }
 
 export interface DeviceMapping {
-    deviceId: string;
+    deviceNickname: string;
     creatureId: string;
     dungeonMaster: boolean;
 }

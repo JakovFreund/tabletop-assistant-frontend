@@ -14,6 +14,7 @@ function App() {
     const dispatch = useDispatch<AppDispatch>();
     const isDM = useSelector((state: RootState) => state.device.dungeonMaster);
     const deviceMappings = useSelector((state: RootState) => state.gameState.deviceMappings);
+    const devices = useSelector((state: RootState) => state.gameState.devices);
     const localStorageDeviceId = 'tabletopAssistantDeviceId'
     const [deviceMapped, setDeviceMapped] = useState(false);
     const deviceIdRef = useRef<string | null>(null);
@@ -56,15 +57,17 @@ function App() {
 
     useEffect(() => {
         if (!deviceIdRef.current) return;
-
-        for (const deviceMapping of deviceMappings) {
-            if (deviceMapping.deviceId === deviceIdRef.current) {
-                dispatch(setCreatureId(deviceMapping.creatureId));
-                dispatch(setDungeonMaster(deviceMapping.dungeonMaster));
+    
+        const matchedDevice = devices.find(device => device.deviceId === deviceIdRef.current);
+        if (matchedDevice) {
+            const matchedMapping = deviceMappings.find(mapping => mapping.deviceNickname === matchedDevice.deviceNickname);
+            if (matchedMapping) {
+                dispatch(setCreatureId(matchedMapping.creatureId));
+                dispatch(setDungeonMaster(matchedMapping.dungeonMaster));
                 setDeviceMapped(true);
             }
         }
-    }, [deviceMappings, dispatch]);
+    }, [deviceMappings, devices, dispatch]);
 
     useEffect(() => {
         const fetchData = async () => {
