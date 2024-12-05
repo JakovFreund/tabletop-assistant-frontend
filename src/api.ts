@@ -36,3 +36,7 @@ export const connectDevice = async (newDeviceId: string) => {
 export const getConnectedDevices = async () => {
     return await apiRequest('GET', '/connected');
 };
+
+export const saveDevice = async (deviceId: string, deviceNickname: string) => {
+    return await apiRequest('PUT', '/device', { deviceId, deviceNickname});
+};

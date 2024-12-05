@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from '../../redux/store';
 import { useEffect, useState } from 'react';
-import { Creature } from '../types';
+import { Creature } from '../../types';
 
 const PlayerStats = () => {
     const creatures = useSelector((state: RootState) => state.gameState.creatures);

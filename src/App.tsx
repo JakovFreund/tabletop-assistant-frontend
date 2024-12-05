@@ -4,11 +4,12 @@ import { RootState, AppDispatch } from './redux/store';
 import { fetchGameState } from './redux/gameStateSlice';
 import logo from './logo.svg';
 import './styles/App.scss';
-import DMInterface from './components/DMInterface';
-import PlayerInterface from './components/PlayerInterface';
+import MasterInterface from './components/master/MasterInterface';
+import PlayerInterface from './components/player/PlayerInterface';
 import { connectDevice, generateUUID } from './api';
 import { fetchConnectedDevices } from './redux/connectedDevicesSlice';
 import { setCreatureId, setDungeonMaster } from './redux/deviceSlice';
+import Modal from './components/modals/Modal';
 
 function App() {
     const dispatch = useDispatch<AppDispatch>();
@@ -57,7 +58,7 @@ function App() {
 
     useEffect(() => {
         if (!deviceIdRef.current) return;
-    
+
         const matchedDevice = devices.find(device => device.deviceId === deviceIdRef.current);
         if (matchedDevice) {
             const matchedMapping = deviceMappings.find(mapping => mapping.deviceNickname === matchedDevice.deviceNickname);
@@ -100,17 +101,17 @@ function App() {
 
     return (
         <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <div>
-                    {deviceMapped ? (<div></div>) : <div>Device not mapped! DeviceId: {deviceIdRef.current}</div>}
-                    {isDM ? (
-                        <DMInterface />
-                    ) : (
-                        <PlayerInterface />
-                    )}
-                </div>
-            </header>
+            <img src={logo} className="App-logo" alt="logo" />
+            <main className="App-body">
+                <Modal />
+                {deviceMapped ? (<div></div>) : <div>Device not mapped! DeviceId: {deviceIdRef.current}</div>}
+                {isDM ? (
+                    <MasterInterface />
+                ) : (
+                    <PlayerInterface />
+                )}
+
+            </main>
         </div>
     );
 }

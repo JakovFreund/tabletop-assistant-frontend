@@ -1,11 +1,17 @@
-.dm-interface {
+.master-interface {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
-    padding: 20px;
+    padding: 10px;
 
+    &-wrapper {
+        display: flex;
+        align-items: flex-start;
+        padding: 10px;
+    }
     .content {
         flex: 1;
-        padding-right: 20px;
+        padding: 20px;
     }
 
     .menu {
@@ -14,7 +20,7 @@
         align-items: flex-start;
         width: 200px;
         padding: 10px;
-        border-left: 1px solid #ddd;
+        //border-left: 1px solid #ddd; // this was for debugging
 
         button {
             width: 100%;

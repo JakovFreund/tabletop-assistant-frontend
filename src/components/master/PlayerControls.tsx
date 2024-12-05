@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { setCreatureHP } from '../api';
+import { RootState } from '../../redux/store';
+import { setCreatureHP } from '../../api';
 
 const PlayerControls = () => {
     const creatures = useSelector((state: RootState) => state.gameState.creatures);

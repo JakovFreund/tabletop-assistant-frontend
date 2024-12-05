@@ -1,0 +1,37 @@
+.flex {
+    &-row,
+    &-column {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+    }
+
+    &-row {
+        flex-direction: row;
+    }
+
+    &-column {
+        flex-direction: column;
+    }
+}
+
+.bg {
+    &-red {
+        // background-color: #282c34; // original bg
+        background-color: #482c34;
+    }
+
+    &-green {
+        background-color: #284c34;
+    }
+}
+
+.color {
+    &-red {
+        background-color: red;
+    }
+
+    &-green {
+        background-color: green;
+    }
+}
