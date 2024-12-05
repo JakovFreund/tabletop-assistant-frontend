@@ -25,6 +25,10 @@ export const getGameState = async () => {
     return await apiRequest('GET', '/gamestate', null, { timeout: 30000 }); // timeout for long polling (30 seconds)
 };
 
+export const saveGameState = async () => {
+    return await apiRequest('PUT', '/gamestate');
+};
+
 export const setCreatureHP = async (creatureId: string, newHP: number) => {
     return await apiRequest('PUT', `/creature/${creatureId}/hp`, { hp: newHP });
 };

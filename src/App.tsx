@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from './redux/store';
 import { fetchGameState } from './redux/gameStateSlice';
 import logo from './logo.svg';
-import './styles/App.scss';
+import './style.scss';
 import MasterInterface from './components/master/MasterInterface';
 import PlayerInterface from './components/player/PlayerInterface';
 import { connectDevice, generateUUID } from './api';

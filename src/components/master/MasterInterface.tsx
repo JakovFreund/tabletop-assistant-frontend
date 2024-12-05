@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import PlayerControls from './PlayerControls';
-import ConnectedDevices from './ConnectedDevices';
+import PlayerControls from './playerControls/PlayerControls';
+import ConnectedDevices from './connectedDevices/ConnectedDevices';
 import './MasterInterface.scss';
-import DeviceMappings from './DeviceMappings';
-import Card from '../Card';
+import DeviceMappings from './deviceMappings/DeviceMappings';
+import { saveGameState } from '../../api';
+import CardButton from '../ui/CardButton';
+import Image from '../ui/Image';
+import MasterNavigation from './MasterNavigation';
 
-const DMInterface = () => {
+const MasterInterface = () => {
     const [selectedComponent, setSelectedComponent] = useState('connectedDevices');
+    const [showNavigation, setShowNavigation] = useState(true);
 
     const renderComponent = () => {
         switch (selectedComponent) {
@@ -21,36 +25,28 @@ const DMInterface = () => {
         }
     };
 
+    const handleSaveGamestate = async () => {
+        try {
+            await saveGameState();
+        } catch (error) {
+            console.error('Error saving gamestate:', error);
+        }
+    }
+
     return (
         <div className="master-interface">
-            <header className="App-header">
+            <header>
                 {/*navigation toggle and save gamestate button*/}
-                <Card onClick={() => console.log("a")}>Save Gamestate</Card>
+                <CardButton onClick={() => setShowNavigation(!showNavigation)}><Image src="sidebar-icon.svg" alt="sidebar" /></CardButton>
+                <h2>Master Interface</h2>
+                <CardButton className="button-gamestate" onClick={() => handleSaveGamestate()}>Save Gamestate</CardButton>
             </header>
             <div className="master-interface-wrapper">
-                <div className="menu">
-                    <button
-                        onClick={() => setSelectedComponent('connectedDevices')}
-                        className={selectedComponent === 'connectedDevices' ? 'active' : ''}
-                    >
-                        Connected Devices
-                    </button>
-                    <button
-                        onClick={() => setSelectedComponent('playerControls')}
-                        className={selectedComponent === 'playerControls' ? 'active' : ''}
-                    >
-                        Player Controls
-                    </button>
-                    <button
-                        onClick={() => setSelectedComponent('deviceMappings')}
-                        className={selectedComponent === 'deviceMappings' ? 'active' : ''}
-                    >
-                        Device Mappings
-                    </button>
-                </div>
-
+                {showNavigation ? <MasterNavigation
+                    setSelectedComponent={setSelectedComponent}
+                    selectedComponent={selectedComponent}
+                /> : null}
                 <div className="content">
-                    <h1>Master Interface</h1>
                     {renderComponent()}
                 </div>
             </div>
@@ -58,4 +54,4 @@ const DMInterface = () => {
     );
 };
 
-export default DMInterface;
+export default MasterInterface;

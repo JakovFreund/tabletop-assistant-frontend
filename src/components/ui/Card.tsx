@@ -1,5 +1,5 @@
 
-import '../styles/Card.scss';
+import './ui.scss';
 
 interface CardProps {
     className?: string;

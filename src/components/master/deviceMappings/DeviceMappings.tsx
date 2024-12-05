@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import Card from '../Card';
+import { RootState } from '../../../redux/store';
+import Card from '../../ui/Card';
 
 const DeviceMappings = () => {
     const devices = useSelector((state: RootState) => state.gameState.devices);

@@ -1,0 +1,25 @@
+.connected-device{
+    display: grid;
+    grid-template-columns: 4fr 2fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
+.edit {
+    display: flex;
+    //border: 3px solid white;
+    img {
+        width: 30px;
+    }
+}
+
+.bg {
+    &-red {
+        // background-color: #282c34; // original bg
+        background-color: #482c34;
+    }
+
+    &-green {
+        background-color: #284c34;
+    }
+}

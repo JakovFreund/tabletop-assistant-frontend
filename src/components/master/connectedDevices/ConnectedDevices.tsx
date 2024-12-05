@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import '../../styles/style.scss';
-import './ConnectedDevice.scss'
+import { RootState } from '../../../redux/store';
+import './ConnectedDevices.scss'
 import ConnectedDeviceCard from './ConnectedDeviceCard';
 
 // DM Interface Component
@@ -16,7 +15,7 @@ const ConnectedDevices = () => {
                 connectedDevices.map((deviceId) => {
                     // if connectedDevice has deviceName
                     const device = devices.find(device => device.deviceId === deviceId);
-                    return <ConnectedDeviceCard deviceId={deviceId} deviceNickname={device ? device.deviceNickname : ""} color={device ? "green" : "red"} />
+                    return <ConnectedDeviceCard key={deviceId} deviceId={deviceId} deviceNickname={device ? device.deviceNickname : ""} color={device ? "green" : "red"} />
 
                 })
             ) : (
