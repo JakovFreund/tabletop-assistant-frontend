@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { closeModal } from '../../redux/modalSlice';
 import { saveDevice } from '../../api';
-import CardButton from '../ui/CardButton';
 
 interface EditDeviceModalProps {
     deviceId: string;
@@ -12,7 +11,8 @@ const EditDeviceModal = ({ deviceId }: EditDeviceModalProps) => {
     const [nicknameState, setNicknameState] = useState("");
     const dispatch = useDispatch();
 
-    const handleSave = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault(); // Prevent default form submission behavior
         try {
             await saveDevice(deviceId, nicknameState);
             dispatch(closeModal());
@@ -24,15 +24,20 @@ const EditDeviceModal = ({ deviceId }: EditDeviceModalProps) => {
     return (
         <div className="edit-device-modal">
             <div className="modal-title"><h3>Edit Device Nickname</h3></div>
-            <input
-                type="text"
-                value={nicknameState}
-                onChange={(e) => setNicknameState(e.target.value)}
-            />
-            <div className="modal-footer">
-                <CardButton className="modal-button" onClick={handleSave}>Save</CardButton>
-                <CardButton className="modal-button" onClick={() => dispatch(closeModal())}>Cancel</CardButton>
-            </div>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={nicknameState}
+                    onChange={(e) => setNicknameState(e.target.value)}
+                    placeholder="Enter new nickname"
+                />
+                <div className="modal-footer">
+                    <button type="submit">Save</button>
+                    <button type="button" onClick={() => dispatch(closeModal())}>
+                        Cancel
+                    </button>
+                </div>
+            </form>
         </div>
     );
 };

@@ -42,5 +42,9 @@ export const getConnectedDevices = async () => {
 };
 
 export const saveDevice = async (deviceId: string, deviceNickname: string) => {
-    return await apiRequest('PUT', '/device', { deviceId, deviceNickname});
+    return await apiRequest('PUT', '/device', { deviceId, deviceNickname });
+};
+
+export const saveDeviceMapping = async (deviceNickname: string, creatureId: string, dungeonMaster: boolean) => {
+    return await apiRequest('PUT', '/device-mapping', { deviceNickname, creatureId, dungeonMaster });
 };

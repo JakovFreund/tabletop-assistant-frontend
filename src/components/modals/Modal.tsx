@@ -5,9 +5,11 @@ import './modal.scss'; // We'll define this later
 
 // Import modal components (add new imports as you create more modal components)
 import EditDeviceModal from './EditDeviceModal';
+import EditDeviceMappingModal from './EditDeviceMappingModal';
 
 const MODAL_COMPONENTS: { [key: string]: React.FC<any> } = {
   EditDevice: EditDeviceModal,
+  EditDeviceMapping: EditDeviceMappingModal
   // Add other modals here in the future
 };
 

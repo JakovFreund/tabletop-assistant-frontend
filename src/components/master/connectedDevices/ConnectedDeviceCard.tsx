@@ -8,7 +8,7 @@ import CardButton from "../../ui/CardButton";
 interface ConnectedDeviceCardProps {
     deviceId: string;
     deviceNickname: string;
-    color: string;
+    mapped: boolean;
 }
 
 const ConnectedDeviceCard = (props: ConnectedDeviceCardProps) => {
@@ -19,7 +19,7 @@ const ConnectedDeviceCard = (props: ConnectedDeviceCardProps) => {
     };
 
     return (
-        <Card className={"bg-" + props.color + " connected-device"}>
+        <Card className={"connected-device " + (props.mapped ? "device-mapped" : "device-unmapped")}>
             <div>{props.deviceId}</div>
             <div>{props.deviceNickname}</div>
             <CardButton className="edit" onClick={() => handleEditClick(props.deviceId)}>

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
-import Card from '../../ui/Card';
+import DeviceMappingCard from './DeviceMappingCard';
 
 const DeviceMappings = () => {
     const devices = useSelector((state: RootState) => state.gameState.devices);
@@ -9,16 +9,15 @@ const DeviceMappings = () => {
     return (
         <div>
             <h3>Device Mappings</h3>
-
             {devices.length > 0 ? (
                 devices.map((device) => {
                     // if connectedDevice has deviceName
                     const deviceMapping = deviceMappings.find(deviceMapping => deviceMapping.deviceNickname === device.deviceNickname);
-                    if (deviceMapping){
-                        return <Card className="bg-green">{device.deviceNickname}</Card>;
-                    } else {
-                        return <Card className="bg-red">{device.deviceId}</Card>;
-                    }
+                    return <DeviceMappingCard
+                        deviceNickname={device.deviceNickname}
+                        creatureId={deviceMapping ? deviceMapping.creatureId : "NO DEVICE"}
+                        dungeonMaster={deviceMapping ? deviceMapping.dungeonMaster : false}
+                    />
                 })
             ) : (
                 <li>No devices found</li>
