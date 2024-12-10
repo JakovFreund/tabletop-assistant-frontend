@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .modal {
     &-overlay {
         position: fixed;
@@ -16,7 +18,7 @@
         display: flex;
         justify-content: center;
         color: white;
-        background-color: hsl(220, 13%, 24%); // lighter version of default
+        background-color: $modal-content;
         box-shadow: 0px 0px 15px 1px black;
         padding: 1rem;
         border-radius: 1rem;
@@ -37,28 +39,9 @@
                 margin: 1rem 0;
             }
 
-            input[type=text] {
-                //justify-self: center;
-                background-color: hsl(220, 13%, 50%);
-                color: black;
-                border-style: none;
-                border-radius: 0.5rem;
-                padding: 0.5rem;
-
-                &:focus {
-                    outline: none;
-                    background-color: hsl(220, 13%, 60%);
-                }
-
-                &::placeholder {
-                    color: hsl(220, 13%, 30%);
-                    opacity: 1;
-                }
-            }
-
             button {
                 color: white;
-                background-color: hsl(220, 13%, 10%);
+                background-color: $button;
                 font-weight: bold;
                 border-style: none;
                 border-radius: 0.5rem;

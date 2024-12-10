@@ -1,4 +1,5 @@
 import Card from "./Card";
+import './ui.scss';
 
 interface CardButtonProps {
     className?: string;

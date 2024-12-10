@@ -1,4 +1,3 @@
-
 import './ui.scss';
 
 interface CardProps {

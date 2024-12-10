@@ -15,7 +15,7 @@ const DeviceMappings = () => {
                     const deviceMapping = deviceMappings.find(deviceMapping => deviceMapping.deviceNickname === device.deviceNickname);
                     return <DeviceMappingCard
                         deviceNickname={device.deviceNickname}
-                        creatureId={deviceMapping ? deviceMapping.creatureId : "NO DEVICE"}
+                        creatureId={deviceMapping ? deviceMapping.creatureId : "(none)"}
                         dungeonMaster={deviceMapping ? deviceMapping.dungeonMaster : false}
                     />
                 })

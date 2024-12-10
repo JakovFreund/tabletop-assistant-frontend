@@ -18,7 +18,7 @@ const apiRequest = async (method: Method, endpoint: string, data?: any, config?:
 };
 
 export const generateUUID = async () => {
-    return await apiRequest('GET', '/UUID');
+    return await apiRequest('GET', '/uuid');
 };
 
 export const getGameState = async () => {
@@ -30,21 +30,21 @@ export const saveGameState = async () => {
 };
 
 export const setCreatureHP = async (creatureId: string, newHP: number) => {
-    return await apiRequest('PUT', `/creature/${creatureId}/hp`, { hp: newHP });
+    return await apiRequest('PUT', `/creatures/${creatureId}/hp`, { hp: newHP });
 };
 
 export const connectDevice = async (newDeviceId: string) => {
-    return await apiRequest('POST', '/connect', { deviceId: newDeviceId })
+    return await apiRequest('POST', '/connected-devices', { deviceId: newDeviceId })
 }
 
 export const getConnectedDevices = async () => {
-    return await apiRequest('GET', '/connected');
+    return await apiRequest('GET', '/connected-devices');
 };
 
 export const saveDevice = async (deviceId: string, deviceNickname: string) => {
-    return await apiRequest('PUT', '/device', { deviceId, deviceNickname });
+    return await apiRequest('PUT', '/devices', { deviceId, deviceNickname });
 };
 
 export const saveDeviceMapping = async (deviceNickname: string, creatureId: string, dungeonMaster: boolean) => {
-    return await apiRequest('PUT', '/device-mapping', { deviceNickname, creatureId, dungeonMaster });
+    return await apiRequest('PUT', '/device-mappings', { deviceNickname, creatureId, dungeonMaster });
 };

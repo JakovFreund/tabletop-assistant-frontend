@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { closeModal } from '../../redux/modalSlice';
 import { saveDeviceMapping } from "../../api";
+import TextInput from "../ui/TextInput";
 
 interface EditDeviceMappingModalProps {
     deviceNickname: string;
@@ -31,10 +32,9 @@ const EditDeviceMappingModal = (props: EditDeviceMappingModalProps) => {
             <div className="modal-title"><h3>Edit Device Mapping</h3></div>
             <form onSubmit={handleSubmit}>
                 <div>{props.deviceNickname}</div>
-                <input
-                    type="text"
+                <TextInput
                     value={creatureIdState}
-                    onChange={(e) => setCreatureIdState(e.target.value)}
+                    onChange={(e: any) => setCreatureIdState(e.target.value)}
                     placeholder="Enter new creatureId"
                 />
                 <div>

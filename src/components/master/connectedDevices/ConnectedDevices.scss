@@ -1,13 +1,15 @@
+@import '../../../variables.scss';
+
 .connected-device{
     display: grid;
     grid-template-columns: 4fr 2fr 1fr;
     justify-items: center;
     align-items: center;
     &.device-mapped{
-        background-color: #284c34;
+        background-color: $device-mapped;
     }
     &.device-unmapped{
-        background-color: #482c34;
+        background-color: $device-unmapped;
     }
     .edit {
         display: flex;

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { closeModal } from '../../redux/modalSlice';
 import { saveDevice } from '../../api';
+import TextInput from '../ui/TextInput';
 
 interface EditDeviceModalProps {
     deviceId: string;
@@ -25,10 +26,9 @@ const EditDeviceModal = ({ deviceId }: EditDeviceModalProps) => {
         <div className="edit-device-modal">
             <div className="modal-title"><h3>Edit Device Nickname</h3></div>
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
+                <TextInput
                     value={nicknameState}
-                    onChange={(e) => setNicknameState(e.target.value)}
+                    onChange={(e: any) => setNicknameState(e.target.value)}
                     placeholder="Enter new nickname"
                 />
                 <div className="modal-footer">
