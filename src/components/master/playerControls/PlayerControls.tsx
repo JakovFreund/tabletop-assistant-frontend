@@ -26,7 +26,7 @@ const PlayerControls = () => {
                 {creatures.length > 0 ? (
                     creatures.map((creature) => (
                         <li key={creature.creatureId}>
-                            {creature.name} ({creature.subrace}): {getCreatureHP(creature.turnResources)} HP
+                            {creature.creatureId} {creature.name} ({creature.subrace}): {getCreatureHP(creature.turnResources)} HP
                             <button
                                 onClick={() => handleHPUpdate(creature.creatureId, getCreatureHP(creature.turnResources) + 10)}
                                 disabled={loading}
