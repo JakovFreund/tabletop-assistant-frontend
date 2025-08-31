@@ -7,11 +7,13 @@ import { saveGameState } from '../../api';
 import CardButton from '../ui/CardButton';
 import Image from '../ui/Image';
 import MasterNavigation from './MasterNavigation';
+import CombatInterface from './combat/CombatInterface';
 
 const MasterInterface = () => {
     const [selectedComponent, setSelectedComponent] = useState('connectedDevices');
     const [showNavigation, setShowNavigation] = useState(true);
 
+    // TODO loop through these and MasterNavigation.tsx duplicate list
     const renderComponent = () => {
         switch (selectedComponent) {
             case 'connectedDevices':
@@ -20,6 +22,8 @@ const MasterInterface = () => {
                 return <PlayerControls />;
             case 'deviceMappings':
                 return <DeviceMappings />;
+            case 'combat':
+                return <CombatInterface />;
             default:
                 return <div>Select a view from the menu</div>;
         }

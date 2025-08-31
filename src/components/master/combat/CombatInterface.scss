@@ -1,0 +1,79 @@
+@import '../../../variables.scss';
+
+.creature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    background-color: $device-mapping;
+    transition: 0.2s;
+
+    .edit {
+        display: flex;
+
+        //border: 3px solid white;
+        img {
+            width: 30px;
+        }
+    }
+
+    &.selected {
+        outline: 2px solid #0077ff;
+        background: #aed84c;
+        color: #333;
+    }
+
+    &:hover {
+        //background: #f4f9ff;
+        cursor: pointer;
+        border: 2px solid #888;
+    }
+}
+
+
+.combat-log-container {
+    padding: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.action-button {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background: #e0e0e0;
+    cursor: pointer;
+
+    &:hover {
+        background: #cfcfcf;
+
+    }
+}
+
+.log-box {
+    background: black;
+    color: white;
+    padding: 1rem;
+    border-radius: 6px;
+    height: 250px;
+    overflow-y: auto;
+}
+
+.log-entry {
+    padding: 4px;
+    cursor: pointer;
+
+    &.selected {
+        background-color: #333;
+        color: #fff;
+        font-weight: bold;
+        border: 1px solid #666;
+    }
+}

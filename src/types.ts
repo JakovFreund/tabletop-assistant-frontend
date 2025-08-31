@@ -43,6 +43,7 @@ export interface Creature {
     turnResources: TurnResource[];
     equiped: string[];
     // ---
+    // Calculated values below ?
     race: string;
     creatureSize: string;
     level: number;
@@ -73,6 +74,9 @@ export interface GameState {
     devices: Device[];
     loading: boolean;
     error: string | null;
+    selectedCreatureId: string | null;
+    selectedLogEntryId: string | null;
+    combatLog: LogEntry[];
 }
 
 export interface DeviceState {
@@ -108,3 +112,17 @@ export enum GameClass {
     // Add other classes here...
 }
 */
+
+export interface CastableInstance {
+  id: string;
+  damageType: string;
+  damageAmount: string; //TODO make into list
+  statusEffects: string[];
+  effectSource: number;
+}
+
+export interface LogEntry {
+  id: string;
+  text: string;
+  castableInstance?: CastableInstance;
+}

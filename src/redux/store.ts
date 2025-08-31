@@ -1,4 +1,3 @@
-// src/redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import deviceReducer from './deviceSlice';
 import gameStateReducer from './gameStateSlice';
@@ -7,8 +6,8 @@ import modalReducer from './modalSlice';
 
 export const store = configureStore({
     reducer: {
-        device: deviceReducer, // This is where you are adding the dm state
-        gameState: gameStateReducer, // Add gameState reducer
+        device: deviceReducer,
+        gameState: gameStateReducer,
         deviceConnectionStatus: connectedDevicesReducer,
         modal: modalReducer
     },

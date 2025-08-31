@@ -6,6 +6,8 @@ interface MasterNavigationProps {
     selectedComponent: string;
 }
 
+//TODO ˇˇ make a class and loop through these and MasterInterface.tsx duplicate list
+
 const MasterNavigation = (props: MasterNavigationProps) => {
     return (
         <div className="menu">
@@ -26,6 +28,12 @@ const MasterNavigation = (props: MasterNavigationProps) => {
                 className={props.selectedComponent === 'deviceMappings' ? 'active' : ''}
             >
                 Device Mappings
+            </CardButton>
+            <CardButton
+                onClick={() => props.setSelectedComponent('combat')}
+                className={props.selectedComponent === 'combat' ? 'active' : ''}
+            >
+                Combat
             </CardButton>
         </div>
     )

@@ -15,7 +15,7 @@ const DeviceMappingCard = (props: DeviceMappingCardProps) => {
     const dispatch = useDispatch();
 
     const handleEditClick = (deviceNickname: string, creatureId: string, dungeonMaster: boolean) => {
-        console.log(props.deviceNickname)
+        console.log(props.deviceNickname);
         dispatch(openModal({ modalType: "EditDeviceMapping", modalProps: { deviceNickname, creatureId, dungeonMaster } }));
     };
     return (
