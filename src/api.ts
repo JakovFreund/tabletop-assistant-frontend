@@ -18,7 +18,7 @@ const apiRequest = async (method: Method, endpoint: string, data?: any, config?:
 };
 
 export const generateUUID = async () => {
-    return await apiRequest('GET', '/uuid');
+    return await apiRequest('GET', '/util/uuid');
 };
 
 export const getGameState = async () => {
@@ -34,11 +34,11 @@ export const setCreatureHP = async (creatureId: string, newHP: number) => {
 };
 
 export const connectDevice = async (newDeviceId: string) => {
-    return await apiRequest('POST', '/connected-devices', { deviceId: newDeviceId })
+    return await apiRequest('POST', '/devices/connected', { deviceId: newDeviceId })
 }
 
 export const getConnectedDevices = async () => {
-    return await apiRequest('GET', '/connected-devices');
+    return await apiRequest('GET', '/devices/connected');
 };
 
 export const saveDevice = async (deviceId: string, deviceNickname: string) => {
@@ -46,5 +46,17 @@ export const saveDevice = async (deviceId: string, deviceNickname: string) => {
 };
 
 export const saveDeviceMapping = async (deviceNickname: string, creatureId: string, dungeonMaster: boolean) => {
-    return await apiRequest('PUT', '/device-mappings', { deviceNickname, creatureId, dungeonMaster });
+    return await apiRequest('PUT', '/devices/mappings', { deviceNickname, creatureId, dungeonMaster });
 };
+
+export const getGameLog = async () => {
+    return await apiRequest('GET', '/gamelog', null, { timeout: 30000 }); // timeout for long polling (30 seconds)
+};
+
+export const saveGameLog = async () => {
+    return await apiRequest('PUT', '/gamelog');
+};
+
+export const pingCastable = async (deviceId: string, casterId: string, castableName: string, slotLevel: number) => {
+    return await apiRequest('POST', '/gamelog/ping-castable', { deviceId, casterId, castableName, slotLevel })
+}

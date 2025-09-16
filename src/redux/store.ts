@@ -3,13 +3,15 @@ import deviceReducer from './deviceSlice';
 import gameStateReducer from './gameStateSlice';
 import connectedDevicesReducer from './connectedDevicesSlice';
 import modalReducer from './modalSlice';
+import gameLogReducer from './gameLogSlice'
 
 export const store = configureStore({
     reducer: {
         device: deviceReducer,
         gameState: gameStateReducer,
         deviceConnectionStatus: connectedDevicesReducer,
-        modal: modalReducer
+        modal: modalReducer,
+        gameLog: gameLogReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

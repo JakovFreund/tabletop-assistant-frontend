@@ -7,8 +7,6 @@ export interface StatusEffectInstance {
     statusEffect: StatusEffect;
     duration: Duration;
     source: EffectSource;
-    dependsUpon: StatusEffect[];
-    customNote: string;
 }
 
 export interface StatusEffect {
@@ -125,4 +123,54 @@ export interface LogEntry {
   id: string;
   text: string;
   castableInstance?: CastableInstance;
+}
+
+export interface CastableInstanceNew {
+    // TODO
+}
+
+export interface StatCalculationStep {
+    value: number;
+    description: string;
+}
+
+export interface StatCalculationBreakdown {
+    type: string;
+    total: number;
+    statCalculationSteps: StatCalculationStep[];
+}
+
+export interface DamageEntry {
+    damageType: string;
+    damageAmount: string;
+}
+
+export interface LogEntryNew {
+    logEntryId: string;
+    timestamp: string;
+    visibility: string;
+    isNested: boolean;
+    logEntryType: string;
+
+    targetCreatureId: string;
+    targetCreatureName: string;
+    sourceCreatureId: string;
+    sourceCreatureName: string;
+    itemId: string;
+    itemName: string;
+    deviceNickname: string;
+    damageEntry: DamageEntry;
+    effectSourceType: string;
+    castableInstance: CastableInstanceNew;
+    lostStatusEffectInstance: StatusEffectInstance;
+    receivedStatusEffectInstance: StatusEffectInstance;
+
+    statCalculationBreakdowns: StatCalculationBreakdown[];
+
+    roundNumber: number;
+    weather: string;
+    timeOfDay: string;
+    sceneCover: string;
+    sceneLightSource: string;
+    sceneLighting: string;
 }

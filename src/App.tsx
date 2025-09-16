@@ -9,6 +9,7 @@ import PlayerInterface from './components/player/PlayerInterface';
 import { connectDevice, generateUUID } from './api';
 import { setCreatureId, setDungeonMaster } from './redux/deviceSlice';
 import Modal from './components/modals/Modal';
+import { fetchGameLog } from './redux/gameLogSlice';
 
 function App() {
     const dispatch = useDispatch<AppDispatch>();
@@ -80,7 +81,22 @@ function App() {
             try {
                 dispatch(fetchGameState());
             } catch {
-                console.error('Error fetching game state data');
+                console.error('Error fetching gamestate.');
+            }
+        };
+
+        const intervalId = setInterval(fetchData, 2000);
+
+        return () => clearInterval(intervalId);
+    }, [dispatch]);
+
+    // fetchGameLog
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                dispatch(fetchGameLog());
+            } catch {
+                console.error('Error fetching gamelog.');
             }
         };
 
