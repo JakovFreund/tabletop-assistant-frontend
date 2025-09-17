@@ -1,6 +1,9 @@
 export interface TurnResource {
     type: string;
+    name: string;
     amount: number;
+    maxAmount: number;
+    refillRate: string;
 }
 
 export interface StatusEffectInstance {
@@ -72,9 +75,6 @@ export interface GameState {
     devices: Device[];
     loading: boolean;
     error: string | null;
-    selectedCreatureId: string | null;
-    selectedLogEntryId: string | null;
-    combatLog: LogEntry[];
 }
 
 export interface DeviceState {
@@ -88,45 +88,48 @@ export interface ConnectedDevices {
     error: string | null;
 }
 
-/*
-// probably don't need this
-export enum Ability {
-    STR = 'Strength',
-    DEX = 'Dexterity',
-    CON = 'Constitution',
-    INT = 'Intelligence',
-    WIS = 'Wisdom',
-    CHA = 'Charisma'
+export interface Castable {
+    name: string;
+    ritual: boolean;
+    concentration: boolean;
+    savingThrow: string;
+    effectTarget: EffectTarget;
+    duration: Duration;
+    costs: Record<string, number>;
+    castableDamageComponents: CastableDamageComponent[];
+    healAtSlotLevel: Record<number, string>;
+    appliesStatusEffects: string[];
+    description: string[];
 }
 
-export enum Skill {
-    ACROBATICS = 'Acrobatics',
-    // Add other skills here...
+export interface CastableDamageComponent {
+    damageType: string;
+    damageAtCreatureLevel: Record<number, string>;
+    damageAtSlotLevel: Record<number, string>;
 }
 
-export enum GameClass {
-    FIGHTER = 'Fighter',
-    WIZARD = 'Wizard',
-    // Add other classes here...
+export interface EffectTarget {
+    rangeType: string;
+    rangeSize: number;
+    areaType: string;
+    areaSize: number;
 }
-*/
 
 export interface CastableInstance {
-  id: string;
-  damageType: string;
-  damageAmount: string; //TODO make into list
-  statusEffects: string[];
-  effectSource: number;
+    castable: Castable;
+    casterId: string;
+    casterName: string;
+    slotLevel: number;
+    damageInstance: DamageInstance;
 }
 
-export interface LogEntry {
-  id: string;
-  text: string;
-  castableInstance?: CastableInstance;
+export interface DamageInstance {
+    damage: Damage;
+    effectSource: EffectSource;
 }
 
-export interface CastableInstanceNew {
-    // TODO
+export interface Damage {
+    components: Record<string, string>;
 }
 
 export interface StatCalculationStep {
@@ -145,7 +148,7 @@ export interface DamageEntry {
     damageAmount: string;
 }
 
-export interface LogEntryNew {
+export interface LogEntry {
     logEntryId: string;
     timestamp: string;
     visibility: string;
@@ -161,7 +164,7 @@ export interface LogEntryNew {
     deviceNickname: string;
     damageEntry: DamageEntry;
     effectSourceType: string;
-    castableInstance: CastableInstanceNew;
+    castableInstance: CastableInstance;
     lostStatusEffectInstance: StatusEffectInstance;
     receivedStatusEffectInstance: StatusEffectInstance;
 

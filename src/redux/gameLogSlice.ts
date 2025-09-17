@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { getGameLog } from '../api';
-import { LogEntryNew } from "../types";
+import { LogEntry } from "../types";
 
 
 const initialState: {
-    entries: LogEntryNew[];
+    entries: LogEntry[];
     loading: boolean;
     error: string | null;
 } = {
@@ -22,7 +22,7 @@ const gameLogSlice = createSlice({
     name: 'gameLog',
     initialState,
     reducers: {
-        addLogEntry(state, action: PayloadAction<LogEntryNew>) {
+        addLogEntry(state, action: PayloadAction<LogEntry>) {
             state.entries.push(action.payload);
         },
         clearLog(state) {
@@ -35,7 +35,7 @@ const gameLogSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchGameLog.fulfilled, (state, action: PayloadAction<LogEntryNew[]>) => {
+            .addCase(fetchGameLog.fulfilled, (state, action: PayloadAction<LogEntry[]>) => {
                 state.entries = action.payload;
                 state.loading = false;
             })

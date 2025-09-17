@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { getGameState } from '../api';
-import { Creature, Device, DeviceMapping, GameState, LogEntry } from '../types';
+import { Creature, Device, DeviceMapping, GameState } from '../types';
 
 const initialState: GameState = {
     creatures: [],
@@ -8,9 +8,6 @@ const initialState: GameState = {
     devices: [],
     loading: false,
     error: null,
-    selectedCreatureId: null,
-    selectedLogEntryId: null,
-    combatLog: [],
 };
 
 export const fetchGameState = createAsyncThunk('gameState/fetch', async () => {
@@ -21,23 +18,7 @@ export const fetchGameState = createAsyncThunk('gameState/fetch', async () => {
 const gameStateSlice = createSlice({
     name: 'gameState',
     initialState,
-    reducers: {
-        setSelectedCreatureId(
-            state,
-            action: PayloadAction<string | null>
-        ) {
-            state.selectedCreatureId = action.payload;
-        },
-        setSelectedLogEntryId(
-            state,
-            action: PayloadAction<string | null>
-        ) {
-            state.selectedLogEntryId = action.payload;
-        },
-        addLogEntry(state, action: PayloadAction<LogEntry>) {
-            state.combatLog.push(action.payload);
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchGameState.pending, (state) => {
@@ -57,5 +38,4 @@ const gameStateSlice = createSlice({
     },
 });
 
-export const { setSelectedCreatureId, setSelectedLogEntryId, addLogEntry } = gameStateSlice.actions;
 export default gameStateSlice.reducer;
