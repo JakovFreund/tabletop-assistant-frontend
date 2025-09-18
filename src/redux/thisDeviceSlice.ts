@@ -1,13 +1,14 @@
 // src/redux/dmSlice.ts
 import { createSlice } from '@reduxjs/toolkit';
-import { DeviceState } from '../types';
+import { ThisDevice } from '../types';
 
-const initialState: DeviceState = {
+const initialState: ThisDevice = {
+    deviceId: "",
     creatureId: "",
     dungeonMaster: false,
 };
 
-const deviceSlice = createSlice({
+const thisDeviceSlice = createSlice({
     name: 'device',
     initialState,
     reducers: {
@@ -16,9 +17,12 @@ const deviceSlice = createSlice({
         },
         setCreatureId: (state, action) => {
             state.creatureId = action.payload;
+        },
+        setDeviceId: (state, action) => {
+            state.deviceId = action.payload;
         }
     },
 });
 
-export const { setCreatureId, setDungeonMaster } = deviceSlice.actions;
-export default deviceSlice.reducer;
+export const { setCreatureId, setDungeonMaster, setDeviceId } = thisDeviceSlice.actions;
+export default thisDeviceSlice.reducer;

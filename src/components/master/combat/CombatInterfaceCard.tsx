@@ -22,7 +22,8 @@ const CombatInterfaceCard = ({ creatureId, creatureName }: CombatInterfaceCardPr
     const { creatures } = useSelector(
         (state: RootState) => state.gameState
     );
-    const { entries } = useSelector((state: RootState) => state.gameLog);
+    const entries = useSelector((state: RootState) => state.gameLog.entries);
+    const thisDeviceId = useSelector((state: RootState) => state.thisDevice.deviceId);
     const { selectedLogEntryId, selectedCreatureId } = useSelector((state: RootState) => state.ui);
     
     
@@ -45,7 +46,7 @@ const CombatInterfaceCard = ({ creatureId, creatureName }: CombatInterfaceCardPr
         setLoading(true);
         // Call backend to ping castable
         await pingCastable(
-            "553c08eb-08c3-4148-845c-cf8e1fb42a38", // TODO deviceId
+            thisDeviceId,
             creature.creatureId, 
             castableName,
             3 //slotLevel
@@ -66,13 +67,13 @@ const CombatInterfaceCard = ({ creatureId, creatureName }: CombatInterfaceCardPr
 
         // MODE 1: Log entry selected → apply effect
         if (selectedLogEntry?.castableInstance) {
-            const damage = parseInt("2", 10) || 0; // damageAmount, decimal base 10
+            const damageAmount = parseInt("2", 10) || 0; // damageAmount, decimal base 10
             const currentHP = getCreatureHP(creature.turnResources);
 
             try {
                 setLoading(true);
                 // instead make a request of casting the selected castable on the creature
-                // await setCreatureHP(creatureId, currentHP - damage);
+                // await setCreatureHP(creatureId, currentHP - damageAmount);
                 console.log(`${creatureName} takes damage!`);
             } catch (err) {
                 console.error("Error applying damage:", err);

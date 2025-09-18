@@ -72,12 +72,14 @@ export interface Device {
 export interface GameState {
     creatures: Creature[];
     deviceMappings: DeviceMapping[];
-    devices: Device[];
-    loading: boolean;
-    error: string | null;
 }
 
-export interface DeviceState {
+export interface Devices { // do i need this??
+    devices: Device[];
+}
+
+export interface ThisDevice { //DeviceState
+    deviceId: string;
     creatureId: string;
     dungeonMaster: boolean;
 }

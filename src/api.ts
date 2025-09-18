@@ -60,3 +60,7 @@ export const saveGameLog = async () => {
 export const pingCastable = async (deviceId: string, casterId: string, castableName: string, slotLevel: number) => {
     return await apiRequest('POST', '/gamelog/ping-castable', { deviceId, casterId, castableName, slotLevel })
 }
+
+export const getDevices = async () => {
+    return await apiRequest('GET', '/devices', null, { timeout: 30000 }); // timeout for long polling (30 seconds)
+};

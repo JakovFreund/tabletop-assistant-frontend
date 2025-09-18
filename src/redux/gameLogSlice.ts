@@ -14,8 +14,8 @@ const initialState: {
 };
 
 export const fetchGameLog = createAsyncThunk('gameLog/fetch', async () => {
-    const response = await getGameLog(); // should hit GET /api/gamelog
-    return response; // expecting LogEntry[]
+    const response = await getGameLog();
+    return response;
 });
 
 const gameLogSlice = createSlice({

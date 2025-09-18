@@ -1,18 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
-import deviceReducer from './deviceSlice';
+import thisDeviceReducer from './thisDeviceSlice';
 import gameStateReducer from './gameStateSlice';
 import connectedDevicesReducer from './connectedDevicesSlice';
 import modalReducer from './modalSlice';
 import gameLogReducer from './gameLogSlice'
 import uiReducer from './uiSlice'
+import deviceRegistryReducer from './deviceRegistrySlice'
 
 export const store = configureStore({
     reducer: {
-        device: deviceReducer,
-        gameState: gameStateReducer,
+        thisDevice: thisDeviceReducer,
+        deviceRegistry: deviceRegistryReducer,
         deviceConnectionStatus: connectedDevicesReducer,
-        modal: modalReducer,
+        gameState: gameStateReducer,
         gameLog: gameLogReducer,
+        modal: modalReducer,
         ui: uiReducer
     },
     middleware: (getDefaultMiddleware) =>

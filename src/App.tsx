@@ -7,19 +7,19 @@ import './style.scss';
 import MasterInterface from './components/master/MasterInterface';
 import PlayerInterface from './components/player/PlayerInterface';
 import { connectDevice, generateUUID } from './api';
-import { setCreatureId, setDungeonMaster } from './redux/deviceSlice';
+import { setCreatureId, setDungeonMaster, setDeviceId } from './redux/thisDeviceSlice';
 import Modal from './components/modals/Modal';
 import { fetchGameLog } from './redux/gameLogSlice';
+import { fetchDevices } from './redux/deviceRegistrySlice';
 
 function App() {
     const dispatch = useDispatch<AppDispatch>();
-    const isDM = useSelector((state: RootState) => state.device.dungeonMaster);
+    const isDM = useSelector((state: RootState) => state.thisDevice.dungeonMaster);
     const deviceMappings = useSelector((state: RootState) => state.gameState.deviceMappings);
-    const devices = useSelector((state: RootState) => state.gameState.devices);
+    const devices = useSelector((state: RootState) => state.deviceRegistry.devices);
     const localStorageDeviceId = 'tabletopAssistantDeviceId'
     const [thisDeviceMapped, setThisDeviceMapped] = useState(false);
     const thisDeviceIdRef = useRef<string | null>(null);
-
 
     // adds deviceId to connectedDevices list on backend
     const handleDeviceConnect = async (deviceId: string) => {
@@ -67,6 +67,7 @@ function App() {
         if (matchedDevice) {
             const matchedMapping = deviceMappings.find(mapping => mapping.deviceNickname === matchedDevice.deviceNickname);
             if (matchedMapping) {
+                dispatch(setDeviceId(matchedDevice.deviceId))
                 dispatch(setCreatureId(matchedMapping.creatureId));
                 dispatch(setDungeonMaster(matchedMapping.dungeonMaster));
                 setThisDeviceMapped(true);
@@ -103,6 +104,19 @@ function App() {
         const intervalId = setInterval(fetchData, 2000);
 
         return () => clearInterval(intervalId);
+    }, [dispatch]);
+
+    // fetchDevices
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                dispatch(fetchDevices());
+            } catch {
+                console.error("Error fetching devices.");
+            }
+        };
+
+        fetchData();
     }, [dispatch]);
 
 

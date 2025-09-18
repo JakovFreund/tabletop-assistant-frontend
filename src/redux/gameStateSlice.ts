@@ -1,11 +1,15 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { getGameState } from '../api';
-import { Creature, Device, DeviceMapping, GameState } from '../types';
+import { Creature, DeviceMapping } from '../types';
 
-const initialState: GameState = {
+const initialState: {
+    creatures: Creature[];
+    deviceMappings: DeviceMapping[];
+    loading: boolean;
+    error: string | null;
+} = {
     creatures: [],
     deviceMappings: [],
-    devices: [],
     loading: false,
     error: null,
 };
@@ -25,10 +29,9 @@ const gameStateSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchGameState.fulfilled, (state, action: PayloadAction<{ creatures: Creature[], deviceMappings: DeviceMapping[], devices: Device[] }>) => {
+            .addCase(fetchGameState.fulfilled, (state, action: PayloadAction<{ creatures: Creature[], deviceMappings: DeviceMapping[]}>) => {
                 state.creatures = action.payload.creatures;
                 state.deviceMappings = action.payload.deviceMappings;
-                state.devices = action.payload.devices;
                 state.loading = false;
             })
             .addCase(fetchGameState.rejected, (state, action) => {

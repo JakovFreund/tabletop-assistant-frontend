@@ -3,7 +3,7 @@ import { RootState } from '../../../redux/store';
 import DeviceMappingCard from './DeviceMappingCard';
 
 const DeviceMappings = () => {
-    const devices = useSelector((state: RootState) => state.gameState.devices);
+    const devices = useSelector((state: RootState) => state.deviceRegistry.devices);
     const deviceMappings = useSelector((state: RootState) => state.gameState.deviceMappings);
 
     return (

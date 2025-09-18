@@ -5,7 +5,7 @@ import { Creature } from '../../types';
 
 const PlayerStats = () => {
     const creatures = useSelector((state: RootState) => state.gameState.creatures);
-    const creatureId = useSelector((state: RootState) => state.device.creatureId);
+    const creatureId = useSelector((state: RootState) => state.thisDevice.creatureId);
     const [thisCreature, setThisCreature] = useState<Creature | null>(null);
 
 

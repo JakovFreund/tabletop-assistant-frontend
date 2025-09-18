@@ -12,7 +12,7 @@ const ConnectedDevices = () => {
     const dispatch = useDispatch<AppDispatch>(); // AppDispatch?
 
     const connectedDevices = useSelector((state: RootState) => state.deviceConnectionStatus.connectedDevices);
-    const devices = useSelector((state: RootState) => state.gameState.devices);
+    const devices = useSelector((state: RootState) => state.deviceRegistry.devices);
 
     useEffect(() => {
         const fetchConnectedDevicesData = async () => {
